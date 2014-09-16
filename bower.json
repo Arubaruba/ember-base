@@ -1,0 +1,26 @@
+{
+  "name": "ember-backend-sample",
+  "version": "0.0.0",
+  "authors": [
+    "Andreas Stocker"
+  ],
+  "description": "Sample app to test ember-backend",
+  "main": "app/index.html",
+  "license": "Apache2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember": "~1.7.0",
+    "jquery": "~2.1.1",
+    "handlebars": "~2.0.0",
+    "ember-data": "~0.0.14"
+  },
+  "devDependencies": {
+    "qunit": "~1.15.0"
+  }
+}
