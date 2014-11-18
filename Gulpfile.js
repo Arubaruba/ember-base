@@ -5,6 +5,8 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify'),
   handlebars = require('gulp-handlebars'),
   order = require('gulp-order'),
+  wrap = require('gulp-wrap'),
+  declare = require('gulp-declare'),
 
   eventStream = require('event-stream'),
   emberHandlebars = require('ember-handlebars'),
@@ -27,7 +29,7 @@ var pipes = {
   dependencies: function () {
     return gulp.src([
       'bower_components/jquery/dist/jquery.min.js',
-      'bower_components/handlebars/handlebars.runtime.min.js',
+      'bower_components/handlebars/handlebars.min.js',
       'bower_components/ember/ember.min.js',
       'bower_components/ember-data/ember-data.min.js'
     ])
@@ -38,7 +40,12 @@ var pipes = {
       'app/**/*.hbs'
     ])
       .pipe(handlebars({
-        handlebars: emberHandlebars
+        handlebars: require('ember-handlebars')
+      }))
+      .pipe(wrap('Ember.Handlebars.template(<%= contents %>)'))
+      .pipe(declare({
+        namespace: 'Ember.TEMPLATES',
+        noRedeclare: true
       }))
       .pipe(uglify())
       .pipe(concat(packageName + '.templates.js'));
@@ -50,7 +57,7 @@ var pipes = {
   }
 };
 
-gulp.task('development', function () {
+gulp.task('default', function () {
   eventStream.merge(
     pipes.dependencies(),
     pipes.localScripts(),
